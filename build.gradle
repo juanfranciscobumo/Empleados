@@ -28,3 +28,6 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+tasks.named('jar') {
+	enabled = true // Asegúrate de que la tarea de JAR está habilitada
+}
