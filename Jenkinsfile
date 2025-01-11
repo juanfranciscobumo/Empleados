@@ -48,19 +48,6 @@ pipeline {
             }
         }
 
-       stage('Desplegar mock en EC2') {
-			steps {
-				echo 'Desplegando el mock en EC2...'
-                script {
-					sh """
-                ssh -o StrictHostKeyChecking=no -i ${SSH_KEY} ${EC2_HOST} \
-                docker ps -q -f name=nervous_meitner | xargs -r docker stop && \
-                docker ps -a -q -f name=nervous_meitner | xargs -r docker rm && \
-                docker run -d -p 3001:3001 --mount type=bind,source=${WORKSPACE}/data/apiempleados.json,target=/mockoon/apiempleados.json,readonly mockoon/cli:latest -d /mockoon/apiempleados.json -p 3001'
-            """
-        }
-    }
-}
         stage('Desplegar API en EC2') {
 			steps {
 				echo 'Desplegando API en EC2...'
