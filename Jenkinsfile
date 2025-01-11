@@ -56,7 +56,7 @@ pipeline {
                 ssh -o StrictHostKeyChecking=no -i ${SSH_KEY} ${EC2_HOST} \
                 docker ps -q -f name=nervous_meitner | xargs -r docker stop && \
                 docker ps -a -q -f name=nervous_meitner | xargs -r docker rm && \
-                docker run -d --mount type=bind,source=/home/admin/data/apiempleados.json,target=/data/apiempleados.json,readonly -p 3001:3001 mockoon/cli:latest -d /data/apiempleados.json -p 3001'
+                docker run -d -p 3001:3001 --mount type=bind,source=${WORKSPACE}/data/apiempleados.json,target=/mockoon/apiempleados.json,readonly mockoon/cli:latest -d /mockoon/apiempleados.json -p 3001'
             """
         }
     }
