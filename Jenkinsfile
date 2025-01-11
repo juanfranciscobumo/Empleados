@@ -48,9 +48,27 @@ pipeline {
             }
         }
 
-        stage('Desplegar en EC2') {
+stage('Desplegar mock en EC2') {
 			steps {
-				echo 'Desplegando el contenedor en EC2...'
+				echo 'Desplegando el mock en EC2...'
+        script {
+					sh """
+                # Copiar el archivo apiempleados.json al host EC2
+                scp -i ${SSH_KEY} ./data/apiempleados.json ${EC2_HOST}:/home/admin/data/apiempleados.json
+
+                # Ejecutar el contenedor Mockoon en EC2 con el archivo copiado
+                ssh -o StrictHostKeyChecking=no -i ${SSH_KEY} ${EC2_HOST} \
+                'docker pull mockoon/cli:latest && \
+                docker ps -q -f name=nervous_meitner | xargs -r docker stop && \
+                docker ps -a -q -f name=nervous_meitner | xargs -r docker rm && \
+                docker run -d --mount type=bind,source=/home/admin/data/apiempleados.json,target=/data/apiempleados.json,readonly -p 3001:3001 mockoon/cli:latest -d /data/apiempleados.json -p 3001'
+            """
+        }
+    }
+}
+        stage('Desplegar API en EC2') {
+			steps {
+				echo 'Desplegando API en EC2...'
                 script {
 					sh """
                         ssh -o StrictHostKeyChecking=no -i ${SSH_KEY} ${EC2_HOST} \
