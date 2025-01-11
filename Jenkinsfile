@@ -8,7 +8,7 @@ pipeline {
 		DOCKER_IMAGE = 'juanfranciscobumo/empleados:latest'
         DOCKER_PLATFORMS = 'linux/amd64,linux/arm64'
         SSH_KEY = 'clave-ec2.pem'  // Define la clave SSH como una variable
-        EC2_HOST = 'admin@ec2-3-92-197-135.compute-1.amazonaws.com' // Define el host EC2 como variable
+        EC2_HOST = 'admin@ec2-3-83-67-172.compute-1.amazonaws.com' // Define el host EC2 como variable
         TEST_REPO = 'https://github.com/juanfranciscobumo/AutoApiEmpleados.git' // Define el repositorio de pruebas
         APP_REPO = 'https://github.com/juanfranciscobumo/Empleados.git' // Define el repositorio de la aplicación
     }
