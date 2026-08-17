@@ -1,4 +1,8 @@
 HELP.md
+.env
+*.pem
+*.key
+credentials/
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
